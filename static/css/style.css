@@ -169,6 +169,81 @@ h1, .brand {
     border: 3px solid var(--ink);
 }
 
+.section {
+    padding: 3rem 0;
+    border-top: 1px solid var(--line);
+}
+ 
+.section-grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 1.5rem 3rem;
+}
+ 
+.skill-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+ 
+.skill-tag {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.35rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background-color: var(--paper);
+    color: var(--ink);
+}
+ 
+.experience-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+}
+ 
+.experience-item {
+    position: relative;
+    padding-left: 1.25rem;
+    border-left: 2px solid var(--line);
+}
+ 
+.experience-item::before {
+    content: "";
+    position: absolute;
+    left: -5px;
+    top: 0.4rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent);
+}
+ 
+.experience-header {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.25rem 1rem;
+    margin-bottom: 0.35rem;
+}
+ 
+.experience-title {
+    font-weight: 700;
+}
+ 
+.experience-meta {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+ 
+.experience-desc {
+    color: var(--text-muted);
+    max-width: 600px;
+}
+
 .site-footer {
     padding: 1.5rem;
     color: var(--text-muted);
