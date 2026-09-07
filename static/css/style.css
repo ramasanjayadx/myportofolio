@@ -244,6 +244,83 @@ h1, .brand {
     max-width: 600px;
 }
 
+.ask-me-container {
+    max-width: 620px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.ask-me-box {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 2rem;
+    background-color: var(--paper);
+    margin-top: 1rem;
+}
+
+.ask-me-intro {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 1.25rem;
+}
+
+.ask-me-label {
+    display: block;
+    font-size: 0.8rem;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.ask-me-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.ask-me-input {
+    flex: 1 1 280px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background-color: #fff;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.ask-me-input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.ask-me-button {
+    padding: 0.75rem 1.6rem;
+    border: none;
+    border-radius: var(--radius);
+    background-color: var(--ink);
+    color: var(--paper);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.ask-me-button:hover {
+    background-color: var(--accent);
+}
+
+.ask-me-kicker {
+    font-size: 2rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-dark);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+}
+
 .site-footer {
     padding: 1.5rem;
     color: var(--text-muted);
