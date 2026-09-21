@@ -58,6 +58,15 @@ Karena seluruh konten dihardcode dengan HTML, setiap ada pembaruan kegiatan baru
 3. Apa perbedaan fungsi `makemigrations` dan `migrate` pada Django? Berikan contoh perubahan model yang mengharuskanmu menjalankan kedua perintah tersebut.
 * `makemigrations` membaca perubahan pada models.py dan membuat file migration yang mendeskripsikan perubahan skema tersebut. `migrate` kemudian benar-benar menjalankan file migration itu ke database, membuat atau mengubah tabel sesuai definisi di dalamnya. Contohnya seperti kasus penambahan model Project, makemigrations menghasilkan instruksi CreateModel untuk tabel baru, lalu migrate mengeksekusinya sehingga tabel main_project terbentuk di database. 
 ---
+### Tugas 3
+1. Jelaskan mengapa kita menggunakan `ModelForm` pada Django alih-alih membuat form HTML secara manual. Selain itu, jelaskan pula mengapa kita diwajibkan menambahkan `{% csrf_token %}` pada form tersebut!
+* ModelForm dapat secara otomatis membuat form berdasarkan struktur model, sehingga kode lebih singkat, validasi tertangani otomatis, dan data bisa langsung disimpan ke database. Penambahan tag csrf_token juga diwajibkan untuk melindungi aplikasi dari serangan Cross-Site Request Forgery (CSRF). Token ini memastikan bahwa setiap request POST yang dikirim benar-benar berasal dari form situs kita sendiri, bukan dari orang lain.
+
+2. Pada Tutorial 03, kita membahas format data JSON dan XML. Mengapa JSON lebih disukai dalam pengembangan aplikasi web modern dibandingkan XML?
+* JSON lebih disukai karena sintaksnya jauh lebih singkat dan tanpa ada pengulangan tag penutup. Jika dibandingkan, XML menjadi boros ukuran data. Selain itu, JSON didukung secara bawaan oleh JavaScript, sehingga parsing berjalan sangat cepat dan efisien di sisi browser. Struktur datanya juga sangat selaras dengan tipe data array dan objek pada mayoritas bahasa pemrograman modern sekarang ini.
+
+3. Jelaskan alur yang terjadi saat kamu menggunakan fungsi *view* untuk mengembalikan data portofoliomu dalam bentuk JSON. Mengapa kita perlu melakukan proses *serialization* pada model Django sebelum datanya dikembalikan?
+* Alurnya dimulai ketika klien mengakses URL, lalu fungsi view akan mengambil objek dari database, menserialisasikannya menjadi teks JSON, dan mengembalikannya dalam bentuk respons HTTP. Serialization wajib dilakukan karena klien atau browser tidak mengerti struktur objek Python bawaan Django yang kompleks. Dengan serialisasi, objek Python tersebut dapat diterjemahkan menjadi format teks standar universal yang lebih mudah dikirim lewat jaringan dan dipahami oleh aplikasi lain.
 
 # Pengungkapan Penggunaan AI (AI Disclosure)
 Dalam pengembangan website portofolio ini, saya menggunakan **Gemini AI** sebagai *thought partner* dan asisten pendamping untuk mendiskusikan konsep tata letak (CSS Grid/Flexbox) dan mencari solusi atas *bug* tata letak visual. Namun, saya menyadari bahwa AI memiliki keterbatasan kontekstual. Oleh karena itu, saya melakukan analisis kritis terhadap *output* yang dihasilkan AI dan melakukan modifikasi manual secara ekstensif:
@@ -81,8 +90,13 @@ Dalam pengembangan website portofolio ini, saya menggunakan **Gemini AI** sebaga
 ## Tugas 2
 * Pada tugas ini saya menggunakan Gemini AI untuk membantu saya membuat halaman project yang merupakan halaman experience yang dimodifikasi.
 * Dikarenakan tidak ada perubahan yang memerlukan input visual, output yang dihasilkan Gemini sudah sangat membantu saya untuk mengembangkan dan menyelesaikan tugas ini.
+
+## Tugas 3
+* Pada tugas 3 ini, saya menggunakan Gemini AI untuk berdiskusi dan bertanya beberapa hal terkait web development.
+
 ---
 
 # Link Percakapan Dengan AI
 * Tugas 1 : https://share.gemini.google/oTEZk2WsEpOk
 * Tugas 2 : https://share.gemini.google/xTg1abUKK8Vz
+* Tugas 3 : https://share.gemini.google/EGW41S1faajT
