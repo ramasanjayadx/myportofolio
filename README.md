@@ -94,9 +94,13 @@ Dalam pengembangan website portofolio ini, saya menggunakan **Gemini AI** sebaga
 ## Tugas 3
 * Pada tugas 3 ini, saya menggunakan Gemini AI untuk berdiskusi dan bertanya beberapa hal terkait web development.
 
+## Tugas 4
+* Pada tugas 4 ini, saya menggunakan Claude AI untuk berdiskusi dan bertanya beberapa hal terkait web development. Selebihnya saya menggunakan (dan mendapat informasi) dari tutorial yang tersedia di web PBP (tutorial 4)
+
 ---
 
 # Link Percakapan Dengan AI
 * Tugas 1 : https://share.gemini.google/oTEZk2WsEpOk
 * Tugas 2 : https://share.gemini.google/xTg1abUKK8Vz
 * Tugas 3 : https://share.gemini.google/EGW41S1faajT
+* Tugas 4 : https://claude.ai/share/952a314d-b89f-4b3f-ab04-72589924c90f

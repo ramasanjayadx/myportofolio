@@ -28,7 +28,6 @@ def show_main(request):
 
 def show_experience(request):
     json_response = get_experiences_json(request)
-
     experiences = serializers.deserialize(
         "json",
         json_response.content.decode("utf-8"),
@@ -36,14 +35,22 @@ def show_experience(request):
     experiences = [exp.object for exp in experiences]
     title_query = request.GET.get("title", "").strip()
 
+    user_is_editor = False
+    if request.user.is_authenticated:
+        user_is_editor = is_editor(request.user)
+
     context = {
         "name": "Rama Sanjaya",
         "experience_list": experiences,
         "title_query": title_query,
+        "is_editor": user_is_editor,
     }
     return render(request, "experience.html", context)
 
+@login_required(login_url="/login/")
 def create_experience(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
     form = ExperienceForm(request.POST or None)
 
     if request.method == "POST" and form.is_valid():
@@ -57,7 +64,10 @@ def create_experience(request):
     }
     return render(request, "experience_form.html", context)
 
+@login_required(login_url="/login/")
 def edit_experience(request, experience_id):
+    if not (request.user.is_superuser or is_editor(request.user)):
+        raise PermissionDenied
     experience = get_object_or_404(Experience, pk=experience_id)
     form = ExperienceForm(request.POST or None, instance=experience)
 
@@ -73,8 +83,11 @@ def edit_experience(request, experience_id):
     }
     return render(request, "experience_form.html", context)
 
+@login_required(login_url="/login/")
 @require_POST
 def delete_experience(request, experience_id):
+    if not (request.user.is_superuser or is_editor(request.user)):
+        raise PermissionDenied
     experience = get_object_or_404(Experience, pk=experience_id)
     experience.delete()
     messages.success(request, "Pengalaman berhasil dihapus!")
@@ -194,3 +207,29 @@ def toggle_star(request, project_id):
             project.starred_by.add(request.user)
             
     return redirect("main:show_project")
+
+@login_required(login_url="/login/")
+@require_POST
+def toggle_experience_star(request, experience_id):
+    experience = get_object_or_404(Experience, pk=experience_id)
+    if request.user in experience.starred_by.all():
+        experience.starred_by.remove(request.user)
+    else:
+        experience.starred_by.add(request.user)
+    return redirect("main:show_experience")
+
+def is_editor(user):
+    return user.groups.filter(name="Editor").exists()
+
+def get_experiences_json(request):
+    title_query = request.GET.get("title", "").strip()
+    experiences = Experience.objects.all()
+
+    if title_query:
+        experiences = experiences.filter(title__icontains=title_query)
+
+    # Tambahkan argumen use_natural_foreign_keys=True
+    experiences_json = serializers.serialize(
+        "json", experiences, use_natural_foreign_keys=True 
+    )
+    return HttpResponse(experiences_json, content_type="application/json")
