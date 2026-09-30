@@ -300,81 +300,941 @@ h1, .brand {
 }
 
 
-.ask-me-container {
-    max-width: 620px;
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Mock LLM */
+.mock-llm-container {
+    max-width: 720px;
     margin: 0 auto;
-    text-align: center;
 }
 
-.ask-me-box {
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 2rem;
-    background-color: var(--paper);
-    margin-top: 1rem;
-}
-
-.ask-me-intro {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 1.25rem;
-}
-
-.ask-me-label {
-    display: block;
-    font-size: 0.8rem;
-    letter-spacing: 0.04em;
-    color: var(--text-muted);
-    margin-bottom: 0.5rem;
-    text-align: center;
-}
-
-.ask-me-row {
+.mock-llm-header {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    align-items: center;
     gap: 0.75rem;
+    margin-bottom: 0.5rem;
 }
 
-.ask-me-input {
-    flex: 1 1 280px;
-    padding: 0.75rem 1rem;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background-color: #fff;
-    color: var(--ink);
-    font-family: inherit;
-    font-size: 1rem;
-}
-
-.ask-me-input:focus {
-    outline: none;
-    border-color: var(--accent);
-}
-
-.ask-me-button {
-    padding: 0.75rem 1.6rem;
-    border: none;
-    border-radius: var(--radius);
-    background-color: var(--ink);
-    color: var(--paper);
-    font-weight: 600;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.ask-me-button:hover {
-    background-color: var(--accent);
-}
-
-.ask-me-kicker {
+.mock-llm-kicker {
+    font-family: "Space Grotesk", -apple-system, sans-serif;
     font-size: 2rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     color: var(--accent-dark);
     font-weight: 700;
-    margin-bottom: 0.75rem;
+}
+
+.mock-llm-badge {
+    padding: 0.15rem 0.55rem;
+    border: 1px solid var(--accent);
+    border-radius: 999px;
+    color: var(--accent-dark);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.mock-llm-intro {
+    color: var(--text-muted);
+    max-width: 560px;
+    margin-bottom: 1.25rem;
+}
+
+/* Mock LLM: panel chat bertema gelap */
+.llm-app {
+    --llm-bg: #262624;
+    --llm-surface: #30302e;
+    --llm-raised: #383835;
+    --llm-border: #45443f;
+    --llm-text: #ecebe6;
+    --llm-muted: #a3a198;
+    --llm-accent: var(--accent);
+    --llm-check: #6ea8fe;
+
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 14px;
+    background-color: var(--llm-bg);
+    color: var(--llm-text);
+    box-shadow: 0 1rem 2.5rem rgba(28, 25, 23, 0.18);
+}
+
+.llm-spark {
+    display: block;
+    width: 100%;
+    height: 100%;
+    color: var(--llm-accent);
+}
+
+.llm-app ::selection {
+    background-color: color-mix(in srgb, var(--llm-accent) 40%, transparent);
+    color: var(--llm-text);
+}
+
+.llm-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0 0 0.5rem 0.25rem;
+    border-bottom: 1px solid var(--llm-border);
+}
+
+.llm-topbar__title {
+    overflow: hidden;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.llm-topbar__title.is-placeholder {
+    color: var(--llm-muted);
+}
+
+.llm-log-wrap {
+    position: relative;
+}
+
+.llm-jump {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 50%;
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    border: 1px solid var(--llm-border);
+    border-radius: 50%;
+    background-color: var(--llm-surface);
+    color: var(--llm-text);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+    cursor: pointer;
+    transform: translateX(-50%);
+}
+
+.llm-jump[hidden] {
+    display: none;
+}
+
+.llm-jump svg {
+    width: 18px;
+    height: 18px;
+}
+
+.llm-jump:hover {
+    background-color: var(--llm-raised);
+}
+
+.llm-log {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    height: 380px;
+    padding: 1rem 0.25rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--llm-border) transparent;
+}
+
+.llm-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    text-align: center;
+}
+
+.llm-empty__spark {
+    width: 34px;
+    height: 34px;
+    margin-bottom: 0.9rem;
+}
+
+.llm-empty__title {
+    font-family: "Space Grotesk", -apple-system, sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.llm-empty__subtitle {
+    margin-bottom: 1.25rem;
+    color: var(--llm-muted);
+}
+
+.llm-suggestions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.llm-chip {
+    padding: 0.4rem 0.85rem;
+    border: 1px solid var(--llm-border);
+    border-radius: 999px;
+    background-color: transparent;
+    color: var(--llm-text);
+    font-family: inherit;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.llm-chip:hover {
+    border-color: var(--llm-muted);
+    background-color: var(--llm-surface);
+}
+
+/* Pesan */
+.llm-turn--user {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    align-self: flex-end;
+    max-width: 85%;
+}
+
+.llm-bubble {
+    padding: 0.6rem 0.95rem;
+    border-radius: 12px;
+    background-color: var(--llm-raised);
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+}
+
+.llm-turn--user.is-editing {
+    align-self: stretch;
+    max-width: 100%;
+}
+
+.llm-turn--user.is-editing .llm-bubble,
+.llm-turn--user.is-editing .llm-actions {
+    display: none;
+}
+
+.llm-edit {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    border: 1px solid var(--llm-border);
+    border-radius: 12px;
+    background-color: var(--llm-surface);
+}
+
+.llm-edit:focus-within {
+    border-color: var(--llm-muted);
+}
+
+.llm-edit__input {
+    display: block;
+    width: 100%;
+    max-height: 200px;
+    border: 0;
+    background: transparent;
+    color: var(--llm-text);
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: none;
+}
+
+.llm-edit__input:focus {
+    outline: none;
+}
+
+.llm-edit__row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+}
+
+.llm-turn--bot {
+    display: grid;
+    grid-template-columns: 22px 1fr;
+    gap: 0.75rem;
+    align-items: start;
+}
+
+.llm-turn__avatar {
+    width: 22px;
+    height: 22px;
+    margin-top: 0.15rem;
+}
+
+/* Saat berpikir, logo berputar */
+.llm-turn--bot.is-thinking .llm-spark {
+    animation: llm-spark-think 1.6s linear infinite;
+}
+
+.llm-turn__body {
+    min-width: 0;
+}
+
+/* Jawaban model: teks biasa untuk sapaan, satu emoji untuk lainnya */
+.llm-answer--emoji {
+    font-size: 2rem;
+    line-height: 1.2;
+}
+
+.llm-note {
+    margin-top: 0.6rem;
+    font-size: 0.82rem;
+    color: var(--llm-muted);
+}
+
+/* Aksi di bawah pesan */
+.llm-actions {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-top: 0.35rem;
+}
+
+.llm-action {
+    display: inline-grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--llm-muted);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.llm-action svg {
+    width: 16px;
+    height: 16px;
+}
+
+.llm-action:hover:not(:disabled) {
+    background-color: var(--llm-raised);
+    color: var(--llm-text);
+}
+
+.llm-action[aria-pressed="true"] {
+    color: var(--llm-text);
+}
+
+.llm-action[aria-pressed="true"] svg {
+    fill: currentColor;
+    fill-opacity: 0.25;
+}
+
+.llm-action.is-copied {
+    color: var(--llm-check);
+}
+
+.llm-action:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.llm-actions__model {
+    margin-left: 0.5rem;
+    color: var(--llm-muted);
+    font-size: 0.75rem;
+}
+
+/* Regenerate hanya berlaku untuk jawaban terakhir */
+.llm-turn--bot:not(:last-child) [data-action="retry"] {
+    display: none;
+}
+
+/* Di perangkat dengan hover, aksi pesan lama muncul saat disorot */
+@media (hover: hover) {
+    .llm-turn--user .llm-actions,
+    .llm-turn--bot:not(:last-child) .llm-actions {
+        opacity: 0;
+        transition: opacity 0.15s ease;
+    }
+
+    .llm-turn--user:hover .llm-actions,
+    .llm-turn--user:focus-within .llm-actions,
+    .llm-turn--bot:hover .llm-actions,
+    .llm-turn--bot:focus-within .llm-actions {
+        opacity: 1;
+    }
+}
+
+/* Status berpikir */
+.llm-thinking {
+    padding: 0.1rem 0;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: linear-gradient(90deg, var(--llm-muted) 0%, var(--llm-muted) 40%, #fff 50%, var(--llm-muted) 60%, var(--llm-muted) 100%);
+    background-size: 250% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: llm-shimmer 1.8s linear infinite;
+}
+
+.llm-thought {
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--llm-muted);
+}
+
+.llm-thought summary {
+    width: fit-content;
+    cursor: pointer;
+    list-style: none;
+}
+
+.llm-thought summary::-webkit-details-marker {
+    display: none;
+}
+
+.llm-thought summary::after {
+    content: " \203A";
+    display: inline-block;
+    margin-left: 0.2rem;
+    transition: transform 0.15s ease;
+}
+
+.llm-thought[open] summary::after {
+    transform: rotate(90deg);
+}
+
+.llm-thought summary:hover {
+    color: var(--llm-text);
+}
+
+.llm-thought ol {
+    margin: 0.5rem 0 0.25rem;
+    padding: 0.1rem 0 0.1rem 1.6rem;
+    border-left: 2px solid var(--llm-border);
+}
+
+.llm-thought li + li {
+    margin-top: 0.2rem;
+}
+
+/* Composer */
+.llm-composer {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    padding: 0.55rem 0.55rem 0.55rem 1rem;
+    border: 1px solid var(--llm-border);
+    border-radius: 12px;
+    background-color: var(--llm-surface);
+    transition: border-color 0.15s ease;
+}
+
+.llm-composer:focus-within {
+    border-color: var(--llm-muted);
+}
+
+.llm-input {
+    flex: 1;
+    min-width: 0;
+    max-height: 140px;
+    padding: 0.45rem 0;
+    border: 0;
+    background: transparent;
+    color: var(--llm-text);
+    font-family: inherit;
+    font-size: 1rem;
+    line-height: 1.5;
+    resize: none;
+}
+
+.llm-input::placeholder {
+    color: var(--llm-muted);
+}
+
+.llm-input:focus {
+    outline: none;
+}
+
+.llm-send,
+.llm-icon-button {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--llm-muted);
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.llm-send svg,
+.llm-icon-button svg {
+    width: 20px;
+    height: 20px;
+}
+
+.llm-send:hover:not(:disabled),
+.llm-icon-button:hover:not(:disabled) {
+    background-color: var(--llm-raised);
+    color: var(--llm-text);
+}
+
+.llm-send:disabled,
+.llm-icon-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+/* Saat model menjawab, tombol kirim berubah jadi tombol stop */
+.llm-send__icon--stop,
+.llm-send.is-stop .llm-send__icon--send {
+    display: none;
+}
+
+.llm-send.is-stop .llm-send__icon--stop {
+    display: block;
+}
+
+.llm-send.is-stop,
+.llm-send.is-stop:hover {
+    background-color: var(--llm-text);
+    color: var(--llm-bg);
+}
+
+.llm-input,
+.llm-edit__input {
+    caret-color: var(--llm-accent);
+}
+
+/* Toolbar */
+.llm-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.llm-toolbar__group {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.llm-toolbar__text {
+    padding: 0 0.4rem;
+    font-size: 0.9rem;
+    color: var(--llm-muted);
+}
+
+.llm-pill {
+    padding: 0.35rem 0.65rem;
+    border: 0;
+    border-radius: 8px;
+    background-color: var(--llm-surface);
+    color: var(--llm-text);
+    font-family: inherit;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.15s ease;
+}
+
+.llm-pill:hover,
+.llm-pill[aria-expanded="true"] {
+    background-color: var(--llm-raised);
+}
+
+.llm-pill--ghost {
+    background-color: transparent;
+}
+
+.llm-pill--primary,
+.llm-pill--primary:hover {
+    background-color: var(--llm-text);
+    color: var(--llm-bg);
+}
+
+.llm-pill--primary:hover {
+    opacity: 0.9;
+}
+
+.llm-app button:focus-visible,
+.llm-app summary:focus-visible {
+    outline: 2px solid var(--llm-check);
+    outline-offset: 2px;
+}
+
+.llm-status {
+    width: 18px;
+    height: 18px;
+    margin-left: 0.35rem;
+    border: 2px solid var(--llm-border);
+    border-top-color: var(--llm-check);
+    border-radius: 50%;
+}
+
+.llm-status.is-busy {
+    animation: llm-spin 0.8s linear infinite;
+}
+
+/* Menu model */
+.llm-model-picker {
+    position: relative;
+}
+
+.llm-menu {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 0.5rem);
+    z-index: 5;
+    width: min(320px, calc(100vw - 2rem));
+    padding: 0.35rem;
+    border: 1px solid var(--llm-border);
+    border-radius: 12px;
+    background-color: var(--llm-surface);
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
+}
+
+.llm-menu[hidden] {
+    display: none;
+}
+
+.llm-menu__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.5rem 0.65rem;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: var(--llm-text);
+    font-family: inherit;
+    font-size: 0.95rem;
+    text-align: left;
+    cursor: pointer;
+}
+
+.llm-menu__item:hover,
+.llm-menu__item:focus-visible {
+    background-color: var(--llm-raised);
+    outline: none;
+}
+
+.llm-menu__name {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.llm-menu__badge {
+    padding: 0.1rem 0.45rem;
+    border-radius: 6px;
+    background-color: var(--llm-raised);
+    color: var(--llm-muted);
+    font-size: 0.72rem;
+}
+
+.llm-menu__hint {
+    color: var(--llm-muted);
+    font-size: 0.85rem;
+}
+
+.llm-menu__item[aria-checked="true"] .llm-menu__hint {
+    font-size: 0;
+}
+
+.llm-menu__item[aria-checked="true"] .llm-menu__hint::after {
+    content: "\2713";
+    color: var(--llm-check);
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.llm-menu__divider {
+    height: 1px;
+    margin: 0.35rem 0.5rem;
+    background-color: var(--llm-border);
+}
+
+/* Popover effort */
+.llm-effort {
+    position: relative;
+}
+
+.llm-effort-panel {
+    position: absolute;
+    right: 0;
+    bottom: calc(100% + 0.5rem);
+    z-index: 5;
+    width: min(340px, calc(100vw - 2rem));
+    padding: 1rem 1.1rem 0.85rem;
+    border: 1px solid var(--llm-border);
+    border-radius: 12px;
+    background-color: var(--llm-surface);
+    box-shadow: 0 0.75rem 2rem rgba(0, 0, 0, 0.45);
+}
+
+.llm-effort-panel[hidden] {
+    display: none;
+}
+
+.llm-effort-panel__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.1rem;
+}
+
+.llm-effort-panel__title {
+    font-size: 1.05rem;
+}
+
+.llm-effort-panel__label {
+    margin-right: 0.3rem;
+    color: var(--llm-muted);
+}
+
+.llm-effort-panel__help {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--llm-muted);
+    cursor: pointer;
+}
+
+.llm-effort-panel__help svg {
+    width: 20px;
+    height: 20px;
+}
+
+.llm-effort-panel__help:hover {
+    color: var(--llm-text);
+}
+
+.llm-effort-panel__scale {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+    color: var(--llm-muted);
+    font-size: 0.9rem;
+}
+
+/* Slider: --thumb-w dipakai bersama oleh thumb, titik, dan label supaya posisinya selaras */
+.llm-effort-panel {
+    --thumb-w: 26px;
+}
+
+.llm-slider {
+    --progress: 0.5;
+    position: relative;
+    height: 32px;
+    border-radius: 8px;
+    background:
+        linear-gradient(90deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.22)) no-repeat,
+        var(--llm-raised);
+    background-size: calc(var(--thumb-w) / 2 + (100% - var(--thumb-w)) * var(--progress)) 100%, auto;
+}
+
+.llm-slider__marks {
+    position: absolute;
+    inset: 0 calc(var(--thumb-w) / 2);
+}
+
+.llm-slider__mark {
+    position: absolute;
+    top: 50%;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: var(--llm-muted);
+    transform: translate(-50%, -50%);
+}
+
+.llm-slider__mark--recommended {
+    width: 3px;
+    height: 14px;
+    border-radius: 2px;
+}
+
+.llm-slider__input {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.llm-slider__input:focus {
+    outline: none;
+}
+
+.llm-slider__input::-webkit-slider-runnable-track {
+    height: 100%;
+    background: transparent;
+}
+
+.llm-slider__input::-moz-range-track {
+    height: 100%;
+    background: transparent;
+}
+
+.llm-slider__input::-webkit-slider-thumb {
+    width: var(--thumb-w);
+    height: 30px;
+    margin-top: 1px;
+    border: 0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.llm-slider__input::-moz-range-thumb {
+    width: var(--thumb-w);
+    height: 30px;
+    border: 0;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.35);
+}
+
+.llm-slider__input:focus-visible::-webkit-slider-thumb {
+    box-shadow: 0 0 0 2px var(--llm-surface), 0 0 0 4px var(--llm-check);
+}
+
+.llm-slider__input:focus-visible::-moz-range-thumb {
+    box-shadow: 0 0 0 2px var(--llm-surface), 0 0 0 4px var(--llm-check);
+}
+
+.llm-slider__legend {
+    position: relative;
+    height: 1.6rem;
+    margin: 0.45rem calc(var(--thumb-w) / 2) 0;
+}
+
+.llm-slider__recommended {
+    position: absolute;
+    top: 0;
+    color: var(--llm-muted);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    transform: translateX(-50%);
+}
+
+@keyframes llm-spark-think {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes llm-shimmer {
+    from { background-position: 100% 0; }
+    to { background-position: -150% 0; }
+}
+
+
+@keyframes llm-spin {
+    to { transform: rotate(360deg); }
+}
+
+.mock-llm-disclaimer {
+    margin-top: 0.75rem;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+@media (max-width: 600px) {
+    .mock-llm-kicker {
+        font-size: 1.5rem;
+    }
+
+    .llm-app {
+        padding: 0.75rem;
+    }
+
+    .llm-log {
+        height: 360px;
+    }
+
+    .llm-turn--user {
+        max-width: 92%;
+    }
+
+    .llm-toolbar__text {
+        display: none;
+    }
+
+    /* Menu diposisikan terhadap toolbar supaya tidak keluar layar */
+    .llm-toolbar {
+        position: relative;
+    }
+
+    .llm-model-picker,
+    .llm-effort {
+        position: static;
+    }
+
+    .llm-effort-panel {
+        left: 0;
+        width: auto;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .llm-turn--bot.is-thinking .llm-spark,
+    .llm-thinking,
+    .llm-status.is-busy {
+        animation: none;
+    }
+
+    .llm-thinking {
+        color: var(--llm-muted);
+        background: none;
+    }
+}
+
+/* Target sentuh minimal 44px di perangkat layar sentuh */
+@media (pointer: coarse) {
+    .llm-send,
+    .llm-icon-button,
+    .llm-action {
+        width: 44px;
+        height: 44px;
+    }
+
+    .llm-pill {
+        min-height: 44px;
+    }
 }
 
 .project-form {
@@ -673,6 +1533,18 @@ h1, .brand {
 }
 
 @media (max-width: 600px) {
+    .site-header .container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 1rem 1rem;
+    }
+
+    .site-header nav {
+        flex-wrap: wrap;
+        gap: 0.35rem 1.25rem;
+    }
+
     .hero-grid {
         grid-template-columns: 1fr;
         grid-template-areas:

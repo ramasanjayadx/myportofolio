@@ -104,3 +104,9 @@ Dalam pengembangan website portofolio ini, saya menggunakan **Gemini AI** sebaga
 * Tugas 2 : https://share.gemini.google/xTg1abUKK8Vz
 * Tugas 3 : https://share.gemini.google/EGW41S1faajT
 * Tugas 4 : https://claude.ai/share/952a314d-b89f-4b3f-ab04-72589924c90f
+
+---
+
+# Fitur tambahan 
+## Mock LLM
+Mengganti section ask me dengan simulasi chatbot AI yang ada di web LLM asli. Semuanya berjalan di atas javascript, tidak ada data yang dikirim ke server.Bagian ini juga tidak menggunakan model dan respons sungguhan dan (untuk saat ini) hanya menjawab pertanyaan "hi" dan "hai", pertanyaan lain akan dijawab dengan 1 emoji acak.
