@@ -7,11 +7,11 @@
   if (!app || !log || !form || !input) return;
 
   const MODELS = {
-    opus: 'Opus 8.5',
-    gpt: 'GPT-8',
-    gemini: 'Gemini Pro 6.7',
-    sonnet: 'Sonnet 8.5',
-    fable: 'Fable 9.1',
+    maple: 'Maple 8.5',
+    pebble: 'Pebble 8',
+    lumen: 'Lumen Pro 6.7',
+    tango: 'Tango 8.5',
+    quill: 'Quill 9.1',
   };
 
   const EMOJIS = ['🚀', '👌', '😂', '😘', '😜', '👍'];
@@ -82,7 +82,7 @@
   const effortRecommended = document.getElementById('llm-effort-recommended');
   const status = document.getElementById('llm-status');
 
-  let currentModel = 'opus';
+  let currentModel = 'maple';
   let effortIndex = 2;
   let generation = null;
   let stickToBottom = true;
