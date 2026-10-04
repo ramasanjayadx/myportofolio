@@ -119,6 +119,7 @@ Dalam pengembangan website portofolio ini, saya menggunakan **Gemini AI** sebaga
 * Tugas 2 : https://share.gemini.google/xTg1abUKK8Vz
 * Tugas 3 : https://share.gemini.google/EGW41S1faajT
 * Tugas 4 : https://claude.ai/share/952a314d-b89f-4b3f-ab04-72589924c90f
+* Tugas 5 : https://share.gemini.google/1fwFx6Mb0vKE
 
 ---
 
