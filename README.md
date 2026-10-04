@@ -57,6 +57,7 @@ Karena seluruh konten dihardcode dengan HTML, setiap ada pembaruan kegiatan baru
 
 3. Apa perbedaan fungsi `makemigrations` dan `migrate` pada Django? Berikan contoh perubahan model yang mengharuskanmu menjalankan kedua perintah tersebut.
 * `makemigrations` membaca perubahan pada models.py dan membuat file migration yang mendeskripsikan perubahan skema tersebut. `migrate` kemudian benar-benar menjalankan file migration itu ke database, membuat atau mengubah tabel sesuai definisi di dalamnya. Contohnya seperti kasus penambahan model Project, makemigrations menghasilkan instruksi CreateModel untuk tabel baru, lalu migrate mengeksekusinya sehingga tabel main_project terbentuk di database. 
+
 ---
 ### Tugas 3
 1. Jelaskan mengapa kita menggunakan `ModelForm` pada Django alih-alih membuat form HTML secara manual. Selain itu, jelaskan pula mengapa kita diwajibkan menambahkan `{% csrf_token %}` pada form tersebut!
@@ -67,6 +68,17 @@ Karena seluruh konten dihardcode dengan HTML, setiap ada pembaruan kegiatan baru
 
 3. Jelaskan alur yang terjadi saat kamu menggunakan fungsi *view* untuk mengembalikan data portofoliomu dalam bentuk JSON. Mengapa kita perlu melakukan proses *serialization* pada model Django sebelum datanya dikembalikan?
 * Alurnya dimulai ketika klien mengakses URL, lalu fungsi view akan mengambil objek dari database, menserialisasikannya menjadi teks JSON, dan mengembalikannya dalam bentuk respons HTTP. Serialization wajib dilakukan karena klien atau browser tidak mengerti struktur objek Python bawaan Django yang kompleks. Dengan serialisasi, objek Python tersebut dapat diterjemahkan menjadi format teks standar universal yang lebih mudah dikirim lewat jaringan dan dipahami oleh aplikasi lain.
+
+---
+### Tugas 5
+1. Jelaskan apa itu *debouncing* dan mengapa teknik ini penting diterapkan pada fitur pencarian yang menggunakan AJAX!
+* Debouncing adalah teknik dalam pemrograman yang intinya adalah menunggu user selesai input sebelum mulai eksekusi, misal memberi jeda 300 milidetik setelah input terakhir dari user. Tujuannya adalah untuk mencegah eksekusi yang berulang/terkirim request berulang secara tidak sengaja yang memberatkan beban server.
+
+2. Jelaskan fungsi dari penggunaan `await` ketika kita menggunakan `fetch()`! Apa yang akan terjadi jika kita tidak menggunakan `await`?
+* Await berfungsi untuk memberhentikan sementara eksekusi skrip sambil menunggu proses fetch selesai. Tanpa await, kode di bawah fetch akan langsung dieksekusi di mana data respons dari server masih belum tersedia/kosong, sehingga aplikasi/web akan mengalami error atau tidak bekerja semestinya.
+
+3. Jelaskan apa itu serangan XSS (*Cross-Site Scripting*) dan mengapa data yang ditampilkan melalui AJAX/JavaScript lebih rentan terhadap serangan ini daripada data yang ditampilkan langsung melalui *template* Django!
+* XSS adalah celah keamanan web dimana penyerang bisa mengeksekusi script javascript berbahaya di device user yang lain melalui (biasanya) form yang tersimpan di database. Data yang dirender oleh AJAX/JS lebih rentan dibanding Django template karena kerangka kerja Django telah dibekali perlindungan auto-escaping otomatis (seperti karakter < diubah menjadi &lt;) untuk seluruh tag sintaksnya secara bawaan. 
 
 # Pengungkapan Penggunaan AI (AI Disclosure)
 Dalam pengembangan website portofolio ini, saya menggunakan **Gemini AI** sebagai *thought partner* dan asisten pendamping untuk mendiskusikan konsep tata letak (CSS Grid/Flexbox) dan mencari solusi atas *bug* tata letak visual. Namun, saya menyadari bahwa AI memiliki keterbatasan kontekstual. Oleh karena itu, saya melakukan analisis kritis terhadap *output* yang dihasilkan AI dan melakukan modifikasi manual secara ekstensif:
@@ -96,6 +108,9 @@ Dalam pengembangan website portofolio ini, saya menggunakan **Gemini AI** sebaga
 
 ## Tugas 4
 * Pada tugas 4 ini, saya menggunakan Claude AI untuk berdiskusi dan bertanya beberapa hal terkait web development. Selebihnya saya menggunakan (dan mendapat informasi) dari tutorial yang tersedia di web PBP (tutorial 4)
+
+## Tugas 5
+* Saya menggunakan Gemini AI untuk berdiskusi dan membantu dalam bagian script
 
 ---
 

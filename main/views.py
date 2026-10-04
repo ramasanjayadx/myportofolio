@@ -28,12 +28,6 @@ def show_main(request):
 
 
 def show_experience(request):
-    json_response = get_experiences_json(request)
-    experiences = serializers.deserialize(
-        "json",
-        json_response.content.decode("utf-8"),
-    )
-    experiences = [exp.object for exp in experiences]
     title_query = request.GET.get("title", "").strip()
 
     user_is_editor = False
@@ -42,9 +36,9 @@ def show_experience(request):
 
     context = {
         "name": "Rama Sanjaya",
-        "experience_list": experiences,
         "title_query": title_query,
         "is_editor": user_is_editor,
+        "form": ExperienceForm(),
     }
     return render(request, "experience.html", context)
 
@@ -94,15 +88,7 @@ def delete_experience(request, experience_id):
     messages.success(request, "Pengalaman berhasil dihapus!")
     return redirect("main:show_experience")
 
-def get_experiences_json(request):
-    title_query = request.GET.get("title", "").strip()
-    experiences = Experience.objects.all()
 
-    if title_query:
-        experiences = experiences.filter(title__icontains=title_query)
-
-    experiences_json = serializers.serialize("json", experiences)
-    return HttpResponse(experiences_json, content_type="application/json")
 
 def show_project(request):
     title_query = request.GET.get("title", "").strip()
@@ -234,16 +220,49 @@ def is_editor(user):
 
 def get_experiences_json(request):
     title_query = request.GET.get("title", "").strip()
-    experiences = Experience.objects.all()
+    experiences = Experience.objects.prefetch_related('starred_by').all()
 
     if title_query:
         experiences = experiences.filter(title__icontains=title_query)
 
-    # Tambahkan argumen use_natural_foreign_keys=True
-    experiences_json = serializers.serialize(
-        "json", experiences, use_natural_foreign_keys=True 
-    )
-    return HttpResponse(experiences_json, content_type="application/json")
+    data = []
+    for exp in experiences:
+        starred_users = exp.starred_by.all()
+        is_starred = request.user in starred_users if request.user.is_authenticated else False
+        starred_by_names = ", ".join([u.username for u in starred_users])
+        
+        data.append({
+            "pk": str(exp.id),
+            "fields": {
+                "title": exp.title,
+                "description": exp.description,
+                "category": exp.get_category_display(),
+                "thumbnail": exp.thumbnail,
+                "is_ongoing": exp.is_ongoing,
+                "star_count": starred_users.count(),
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
+            }
+        })
+    return JsonResponse(data, safe=False)
+
+@require_POST
+def create_experience_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menambahkan pengalaman."},
+            status=403,
+        )
+        
+    form = ExperienceForm(request.POST)
+    if form.is_valid():
+        experience = form.save()
+        return JsonResponse(
+            {"message": "Pengalaman berhasil ditambahkan.", "pk": str(experience.id)},
+            status=201,
+        )
+        
+    return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
 
 @require_POST
 def create_project_ajax(request):
