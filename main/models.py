@@ -42,6 +42,7 @@ class Project(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=255)
     description = models.TextField()
+    tech_stack = models.CharField(max_length=255, default="", blank=True)
     category = models.CharField(max_length=20, choices=PROJECT_CHOICES, default='web')
     thumbnail = models.URLField(blank=True, null=True)
     project_url = models.URLField(blank=True, null=True)
