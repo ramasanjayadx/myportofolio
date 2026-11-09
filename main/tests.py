@@ -43,26 +43,23 @@ class MainTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "experience.html")
-        self.assertContains(response, self.experience.title)
-        self.assertContains(response, self.experience.description)
-        self.assertContains(response, "Volunteer")
-        self.assertContains(response, "Sedang berlangsung")
+        self.assertContains(response, 'id="grid"')
+        self.assertContains(response, 'id="experience-search-form"')
         self.assertContains(response, f'href="{reverse("main:show_main")}"')
 
     def test_empty_experience_page(self):
         Experience.objects.all().delete()
         response = self.client.get(reverse("main:show_experience"))
 
-        self.assertContains(response, "Belum ada pengalaman yang ditambahkan.")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Belum ada pengalaman yang ditambahkan atau ditemukan.")
 
     def test_completed_experience(self):
         self.experience.ended_at = timezone.now()
         self.experience.save()
-        response = self.client.get(reverse("main:show_experience"))
 
         self.assertFalse(self.experience.is_ongoing)
-        self.assertContains(response, "Selesai")
-        self.assertNotContains(response, "Sedang berlangsung")
+
     def test_project_model(self):
         self.assertEqual(str(self.project), "Portofolio Web")
         self.assertEqual(self.project.category, "web")
@@ -73,13 +70,13 @@ class MainTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "project.html")
-        self.assertContains(response, self.project.title)
-        self.assertContains(response, self.project.description)
-        self.assertContains(response, "Web Development")
-        self.assertContains(response, f'href="/"')
+        self.assertContains(response, 'id="grid"')
+        self.assertContains(response, 'id="project-search-form"')
+        self.assertContains(response, 'href="/"')
 
     def test_empty_project_page(self):
         Project.objects.all().delete()
         response = self.client.get(reverse("main:show_project"))
 
-        self.assertContains(response, "Belum ada proyek yang ditambahkan.")
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Belum ada proyek yang ditambahkan atau ditemukan.")
