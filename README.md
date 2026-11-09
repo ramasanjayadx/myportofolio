@@ -80,6 +80,20 @@ Karena seluruh konten dihardcode dengan HTML, setiap ada pembaruan kegiatan baru
 3. Jelaskan apa itu serangan XSS (*Cross-Site Scripting*) dan mengapa data yang ditampilkan melalui AJAX/JavaScript lebih rentan terhadap serangan ini daripada data yang ditampilkan langsung melalui *template* Django!
 * XSS adalah celah keamanan web dimana penyerang bisa mengeksekusi script javascript berbahaya di device user yang lain melalui (biasanya) form yang tersimpan di database. Data yang dirender oleh AJAX/JS lebih rentan dibanding Django template karena kerangka kerja Django telah dibekali perlindungan auto-escaping otomatis (seperti karakter < diubah menjadi &lt;) untuk seluruh tag sintaksnya secara bawaan. 
 
+---
+### Tugas 6
+1. Jelaskan apa yang dimaksud dengan REST dan mengapa mengembalikan JSON saja belum cukup untuk menyebut sebuah API sebagai RESTful! Jelaskan pula perbedaan `PUT` dan `PATCH` beserta contoh kapan masing-masing sebaiknya digunakan!
+* REST adalah gaya arsitektur web API yang memperlakukan data sebagai resource dengan method HTTP yang menyatakan tindakannya, sehingga mengembalikan JSON saja belum tentu RESTful karena strukturnya belum tentu mengikuti kaidah tersebut. PUT digunakan untuk mengganti representasi resource secara utuh, contohnya saat pengguna mengirim seluruh field form untuk memperbarui data portofolio secara lengkap. Sebaliknya, PATCH digunakan untuk mengubah sebagian data saja, contohnya ketika pengguna hanya ingin mengganti judul proyek tanpa mengirimkan ulang deskripsi atau URL gambar.
+
+2. Jelaskan peran *serializer* pada Django REST Framework! Apa keuntungannya dibandingkan merakit *dictionary* secara manual dengan `JsonResponse` seperti pada Tutorial 05?
+* Serializer berfungsi untuk mengubah objek model database menjadi representasi JSON (serialization) serta memvalidasi dan memproses data input klien sebelum disimpan (deserialization). Dibandingkan merakit dictionary secara manual dengan JsonResponse, serializer mengotomatiskan validasi tipe data dan sanitasi secara terpusat. Pola ini juga mempermudah penanganan field dinamis (computed fields) dan pencegahan injeksi data pada field read-only.
+
+3. Jelaskan perbedaan autentikasi dan otorisasi pada Django REST Framework! Mengapa hak akses harus diperiksa dengan *permission class* di server, bukan hanya dengan menyembunyikan tombol di *template*?
+* Autentikasi memastikan identitas pengirim request (siapa kamu), sedangkan otorisasi memeriksa hak akses pengguna terhadap tindakan tertentu (apa yang boleh kamu lakukan). Pemeriksaan hak akses wajib dilakukan di server melalui permission class karena penyerang dapat memicu request HTTP langsung ke endpoint API melalui tools seperti cURL atau fetch tanpa membuka antarmuka web. Menyembunyikan tombol di template hanyalah kebutuhan visual antarmuka dan bukan mekanisme pengamanan data yang sesungguhnya.
+
+4. Jelaskan mengapa permintaan yang mengubah data tetap memerlukan token CSRF ketika API memakai `SessionAuthentication`! Mengapa *test* yang memakai `force_authenticate` tidak cukup untuk membuktikan bahwa perlindungan CSRF berjalan?
+* Permintaan yang mengubah data tetap membutuhkan token CSRF karena SessionAuthentication mengandalkan cookie sesi yang otomatis disertakan oleh browser, sehingga rentan terhadap serangan manipulasi dari situs berbahaya (Cross-Site Request Forgery). Metode force_authenticate hanya menyematkan objek user secara langsung ke objek request untuk kemudahan pengetesan permission tanpa melewati alur autentikasi dan pemeriksaan middleware yang sebenarnya. Oleh karena itu, pengujian CSRF harus menggunakan APIClient(enforce_csrf_checks=True) dan fungsi .login() untuk menguji proteksi sesi yang nyata.
+
 # Pengungkapan Penggunaan AI (AI Disclosure)
 Dalam pengembangan website portofolio ini, saya menggunakan **Gemini AI** sebagai *thought partner* dan asisten pendamping untuk mendiskusikan konsep tata letak (CSS Grid/Flexbox) dan mencari solusi atas *bug* tata letak visual. Namun, saya menyadari bahwa AI memiliki keterbatasan kontekstual. Oleh karena itu, saya melakukan analisis kritis terhadap *output* yang dihasilkan AI dan melakukan modifikasi manual secara ekstensif:
 
@@ -112,6 +126,9 @@ Dalam pengembangan website portofolio ini, saya menggunakan **Gemini AI** sebaga
 ## Tugas 5
 * Saya menggunakan Gemini AI untuk berdiskusi dan membantu dalam bagian script
 
+## Tugas 6
+* Saya menggunakan Gemini AI untuk membantu mengecek dan menyusun jawaban untuk pertanyaan reflektif.
+
 ---
 
 # Link Percakapan Dengan AI
@@ -120,6 +137,7 @@ Dalam pengembangan website portofolio ini, saya menggunakan **Gemini AI** sebaga
 * Tugas 3 : https://share.gemini.google/EGW41S1faajT
 * Tugas 4 : https://claude.ai/share/952a314d-b89f-4b3f-ab04-72589924c90f
 * Tugas 5 : https://share.gemini.google/1fwFx6Mb0vKE
+* Tugas 6 : https://share.gemini.google/QdtXRjvNeor8
 
 ---
 
