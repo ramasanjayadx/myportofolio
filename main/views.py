@@ -81,7 +81,7 @@ def edit_experience(request, experience_id):
 @login_required(login_url="/login/")
 @require_POST
 def delete_experience(request, experience_id):
-    if not (request.user.is_superuser or is_editor(request.user)):
+    if not request.user.is_superuser:
         raise PermissionDenied
     experience = get_object_or_404(Experience, pk=experience_id)
     experience.delete()
